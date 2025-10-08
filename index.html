@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Breno Ventura | Emagrecimento e Reposição Hormonal</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://rsms.me/">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <style>
+        /* Custom styles and animations */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Define a custom blue theme from Tailwind's palette */
+        .theme-blue {
+            --color-primary: #2563eb; /* blue-600 */
+            --color-primary-hover: #1d4ed8; /* blue-700 */
+            --color-primary-light: #eff6ff; /* blue-50 */
+        }
+        .bg-primary { background-color: var(--color-primary); }
+        .text-primary { color: var(--color-primary); }
+        .border-primary { border-color: var(--color-primary); }
+        .hover\:bg-primary-hover:hover { background-color: var(--color-primary-hover); }
+
+        /* Gentle background gradient animation */
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .bg-gradient-animated {
+            background: linear-gradient(-45deg, var(--color-primary-light), #ffffff, #e0f2fe);
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+        }
+
+        /* Fade-in on scroll animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(2rem);
+            transition: opacity 0.6s cubic-bezier(0.39, 0.575, 0.565, 1), transform 0.6s cubic-bezier(0.39, 0.575, 0.565, 1);
+        }
+        .fade-in.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Smooth entrance for hero elements */
+        .hero-entrance > * {
+            opacity: 0;
+            transform: translateY(1rem);
+            animation: slide-up-fade-in 0.8s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+        }
+        .hero-entrance > *:nth-child(1) { animation-delay: 0.1s; }
+        .hero-entrance > *:nth-child(2) { animation-delay: 0.2s; }
+        .hero-entrance > *:nth-child(3) { animation-delay: 0.3s; }
+        
+        @keyframes slide-up-fade-in {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Accordion icon transition */
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        details[open] .accordion-icon {
+            transform: rotate(45deg);
+        }
+
+        /* Mobile testimonial slider styles */
+        .testimonial-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch; /* for smooth scrolling on iOS */
+            scrollbar-width: none; /* for Firefox */
+        }
+        .testimonial-slider::-webkit-scrollbar {
+            display: none; /* for Chrome, Safari, and Opera */
+        }
+        .testimonial-slider > div {
+            flex: 0 0 90%;
+            scroll-snap-align: center;
+        }
+        @media (min-width: 768px) {
+            .testimonial-slider {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                overflow: visible;
+            }
+            .testimonial-slider > div {
+                flex: auto;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-700 theme-blue">
+
+    <!-- 0. Navigation Bar (Fixed) -->
+    <header id="navbar" class="bg-white/80 backdrop-blur-md fixed top-0 left-0 right-0 z-50 border-b border-gray-200 transition-shadow duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                     <a href="#" class="text-xl font-bold text-gray-900 tracking-tight">Dr. Breno Ventura</a>
+                </div>
+                <!-- Desktop Links -->
+                <nav class="hidden md:flex md:items-center md:space-x-10">
+                    <a href="#tratamentos" class="text-gray-600 hover:text-primary transition-colors">Serviços</a>
+                    <a href="#sobre" class="text-gray-600 hover:text-primary transition-colors">Sobre mim</a>
+                    <a href="#depoimentos" class="text-gray-600 hover:text-primary transition-colors">Depoimentos</a>
+                    <a href="#faq" class="text-gray-600 hover:text-primary transition-colors">FAQ</a>
+                </nav>
+                <!-- CTA & Mobile Menu Button -->
+                <div class="flex items-center space-x-4">
+                    <a href="https://wa.me/5521992341433?text=Olá!%20Vim%20pelo%20site%20do%20Dr.%20Breno%20Ventura%20e%20gostaria%20de%20agendar%20uma%20consulta" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 border border-transparent text-sm font-semibold rounded-lg text-white bg-primary hover:bg-primary-hover shadow-sm hover:shadow-md transition-all duration-300 transform hover:scale-105">
+                        Agendar uma consulta
+                    </a>
+                    <button id="mobile-menu-button" type="button" class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-800 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="md:hidden" id="mobile-menu" style="display: none;">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200 bg-white">
+                <a href="#tratamentos" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50">Serviços</a>
+                <a href="#sobre" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50">Sobre mim</a>
+                <a href="#depoimentos" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50">Depoimentos</a>
+                <a href="#faq" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50">FAQ</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. Hero Section -->
+        <section class="relative pt-24 md:pt-32 pb-16 md:pb-24 overflow-hidden bg-gradient-animated">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div class="text-center md:text-left hero-entrance">
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tighter">
+                            Emagrecimento e reposição hormonal com método <span class="text-primary">exclusivo</span> para resultados reais.
+                        </h1>
+                        <p class="mt-6 text-lg text-gray-600 max-w-xl mx-auto md:mx-0">
+                            Especialista em nutrologia, emagrecimento e reposição hormonal.
+                        </p>
+                        <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                            <a href="https://wa.me/5521992341433?text=Olá!%20Vim%20pelo%20site%20do%20Dr.%20Breno%20Ventura%20e%20gostaria%20de%20agendar%20uma%20consulta" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-semibold rounded-lg text-white bg-primary hover:bg-primary-hover shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                                Agendar consulta
+                            </a>
+                            <a href="https://wa.me/5521992341433?text=Olá!%20Vi%20o%20site%20e%20gostaria%20de%20saber%20mais%20sobre%20a%20consulta%20com%20o%20Dr.%20Breno%20Ventura" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-semibold rounded-lg text-gray-800 bg-white hover:bg-gray-50 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                                Saber Mais
+                            </a>
+                        </div>
+                    </div>
+                    <div class="flex justify-center items-center fade-in">
+                        <div class="bg-white/50 p-4 rounded-3xl shadow-2xl backdrop-blur-sm">
+                             <img src="https://i.imgur.com/vJudynj.png" alt="Foto profissional do Dr. Breno Ventura" class="rounded-2xl w-full max-w-sm h-auto">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nova Seção de Vídeo (Movida para segunda posição) -->
+        <section id="video-apresentacao" class="py-24 bg-white">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center fade-in">
+                    <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl tracking-tighter">Conheça o método que já transformou a vida de centenas de pacientes</h2>
+                </div>
+                <div class="mt-12 mx-auto max-w-sm aspect-[9/16] rounded-2xl shadow-2xl overflow-hidden fade-in" style="transition-delay: 150ms;">
+                    <iframe 
+                        class="w-full h-full" 
+                        src="https://www.youtube.com/embed/7dFM_amKA-8?rel=0&modestbranding=1" 
+                        title="Apresentação do Método Dr. Breno Ventura" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="mt-16 text-center fade-in">
+                    <a href="https://wa.me/5521992341433?text=Olá!%20Vim%20pelo%20site%20do%20Dr.%20Breno%20Ventura%20e%20gostaria%20de%20agendar%20uma%20consulta" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-semibold rounded-lg text-white bg-primary hover:bg-primary-hover shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                        Quero agendar uma consulta
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- NOVA SEÇÃO: Tratamentos -->
+        <section id="tratamentos" class="py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center fade-in">
+                    <h1 class="text-3xl font-extrabold text-gray-900 sm:text-4xl tracking-tighter">Conheça nossos tratamentos</h1>
+                    <h2 class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Acompanhamento personalizado para alcançar seus objetivos de saúde, performance e estética.</h2>
+                </div>
+                
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200/80 hover:shadow-xl transition-shadow duration-300 fade-in">
+                        <h3 class="text-xl font-bold text-gray-900">Suplementação Personalizada</h3>
+                        <p class="mt-2 text-gray-600">Otimizamos sua saúde com planos de suplementação baseados em exames e objetivos, corrigindo deficiências e potencializando seus resultados.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200/80 hover:shadow-xl transition-shadow duration-300 fade-in" style="transition-delay: 100ms;">
+                        <h3 class="text-xl font-bold text-gray-900">Emagrecimento e Controle de Peso</h3>
+                        <p class="mt-2 text-gray-600">Metodologia focada na perda de gordura saudável e sustentável, com estratégias que se encaixam na sua rotina para resultados que duram.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200/80 hover:shadow-xl transition-shadow duration-300 fade-in" style="transition-delay: 200ms;">
+                        <h3 class="text-xl font-bold text-gray-900">Reposição Hormonal e Regulação</h3>
+                        <p class="mt-2 text-gray-600">Equilíbrio hormonal para melhorar a vitalidade e o bem-estar geral, com tratamentos seguros e monitorados por exames.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200/80 hover:shadow-xl transition-shadow duration-300 fade-in" style="transition-delay: 300ms;">
+                        <h3 class="text-xl font-bold text-gray-900">Performance e Longevidade</h3>
+                        <p class="mt-2 text-gray-600">Acompanhamento para otimizar a performance física e mental, promovendo um envelhecimento ativo e saudável.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200/80 hover:shadow-xl transition-shadow duration-300 fade-in" style="transition-delay: 400ms;">
+                        <h3 class="text-xl font-bold text-gray-900">Menopausa</h3>
+                        <p class="mt-2 text-gray-600">Acompanhamento completo para aliviar os sintomas da menopausa, melhorando a qualidade de vida nesta nova fase.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200/80 hover:shadow-xl transition-shadow duration-300 fade-in" style="transition-delay: 500ms;">
+                        <h3 class="text-xl font-bold text-gray-900">Lipedema</h3>
+                        <p class="mt-2 text-gray-600">Abordagem multidisciplinar para o tratamento do lipedema, visando o alívio dos sintomas e a redução da inflamação.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200/80 hover:shadow-xl transition-shadow duration-300 fade-in" style="transition-delay: 600ms;">
+                        <h3 class="text-xl font-bold text-gray-900">Ansiedade e Compulsão Alimentar</h3>
+                        <p class="mt-2 text-gray-600">Tratamento integrado para criar uma relação mais saudável com a comida, abordando as causas da ansiedade e compulsão.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200/80 hover:shadow-xl transition-shadow duration-300 fade-in" style="transition-delay: 700ms;">
+                        <h3 class="text-xl font-bold text-gray-900">Terapia Pós Ciclo e Regulação Hormonal</h3>
+                        <p class="mt-2 text-gray-600">Suporte especializado para a recuperação do eixo hormonal após ciclos, garantindo a saúde e o bem-estar a longo prazo.</p>
+                    </div>
+                </div>
+                <div class="mt-16 text-center fade-in">
+                    <a href="https://wa.me/5521992341433?text=Olá!%20Vim%20pelo%20site%20do%20Dr.%20Breno%20Ventura%20e%20gostaria%20de%20agendar%20uma%20consulta" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-semibold rounded-lg text-white bg-primary hover:bg-primary-hover shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                        Quero agendar uma consulta
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Features Section -->
+        <section id="servicos" class="py-24 bg-gray-50/70">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center fade-in">
+                    <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl tracking-tighter">Uma abordagem completa para sua saúde</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Entenda como o método exclusivo, desenvolvido pelo Dr. Breno Ventura, entrega resultados concretos </p>
+                </div>
+                
+                <div class="mt-16 space-y-8">
+                    <!-- Main Card -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200/80 hover:shadow-xl transition-shadow duration-300 fade-in">
+                        <h3 class="text-xl font-bold text-gray-900">Diagnóstico Completo</h3>
+                        <p class="mt-2 text-gray-600">Analisamos todo o seu histórico de exames, rotina, hábitos e criamos um plano personalizado focado no seu objetivo.</p>
+                    </div>
+
+                    <!-- Secondary Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200/80 hover:shadow-xl transition-shadow duration-300 fade-in" style="transition-delay: 150ms;">
+                            <h3 class="text-xl font-bold text-gray-900">Planejamento Personalizado</h3>
+                            <p class="mt-2 text-gray-600">Pensamos na estratégia do paciente, de forma personalizada para facilitar a adesão ao método.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200/80 hover:shadow-xl transition-shadow duration-300 fade-in" style="transition-delay: 300ms;">
+                            <h3 class="text-xl font-bold text-gray-900">Suporte e Ajustes</h3>
+                            <p class="mt-2 text-gray-600">Acompanhamento via WhatsApp, suporte para dúvidas e ajustes</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200/80 hover:shadow-xl transition-shadow duration-300 fade-in" style="transition-delay: 450ms;">
+                            <h3 class="text-xl font-bold text-gray-900">Suplementação</h3>
+                            <p class="mt-2 text-gray-600">Prescrevemos todos os suplementos necessarios para suprir carencias e regular seu corpo para que ele funcione em plena capacidade.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200/80 hover:shadow-xl transition-shadow duration-300 fade-in" style="transition-delay: 600ms;">
+                            <h3 class="text-xl font-bold text-gray-900">Medicação</h3>
+                            <p class="mt-2 text-gray-600">Entendemos a necessidade do paciente, e dependendo do objetivo e do contexto, preescrevemos medicação para o tratamento.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-16 text-center fade-in">
+                    <a href="https://wa.me/5521992341433?text=Olá!%20Vim%20pelo%20site%20do%20Dr.%20Breno%20Ventura%20e%20gostaria%20de%20agendar%20uma%20consulta" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-semibold rounded-lg text-white bg-primary hover:bg-primary-hover shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                        Quero agendar uma consulta
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 4. "Why Choose" Section -->
+        <section id="sobre" class="py-24 bg-gray-50/70">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Bio and Photo -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+                    <!-- Image Column -->
+                    <div class="fade-in">
+                        <img src="https://i.imgur.com/BqHC4kn.png" alt="Foto do Dr. Breno Ventura" class="rounded-2xl shadow-2xl w-full h-auto object-cover transform hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <!-- Text Column -->
+                    <div class="fade-in" style="transition-delay: 150ms;">
+                        <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl tracking-tighter">Sobre mim</h2>
+                        <p class="mt-6 text-gray-600 leading-relaxed">
+                            Dr. Breno Ventura é médico, formado pela Fundação Tecnico Educacional Souza Marques, Pós graduado especializado em Nutrologia Funcional pela Associação Brasileira de Nutrologia, especializado em saúde Ortomolecular pelo grupo de estudos homeostase ortomolecular e pesquisa, especializado tratamento de Obesidade, participante Blackburn Course in Obesity Medicine certificado pela Harvard Medical School. Trabalhou por 02 anos como médico de família, atuou por 05 anos na área de clinica medica, e no momento atuando há mais de 05 anos em consultório particular de Nutrologia, ajudando pacientes a conquistarem seus objetivos e transformarem suas vidas e auto estima.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-12 text-center fade-in">
+                    <a href="https://wa.me/5521992341433?text=Olá!%20Vim%20pelo%20site%20do%20Dr.%20Breno%20Ventura%20e%20gostaria%20de%20agendar%20uma%20consulta" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-semibold rounded-lg text-white bg-primary hover:bg-primary-hover shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                        Agendar uma consulta
+                    </a>
+                </div>
+
+                <!-- Pillars -->
+                <div class="mt-16 border-t border-gray-200 pt-16">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-y-12 md:gap-x-8 text-center">
+                        <div class="fade-in">
+                            <h4 class="text-xl font-bold text-primary">Especialista Experiente</h4>
+                            <p class="mt-2 text-gray-600">Mais de 5 anos de experiência clínica e centenas de pacientes atendidos.</p>
+                        </div>
+                        <div class="fade-in" style="transition-delay: 150ms;">
+                            <h4 class="text-xl font-bold text-primary">Resultados Comprovados</h4>
+                            <p class="mt-2 text-gray-600">Nossos pacientes têm alta taxa de sucesso e satisfação em seus tratamentos.</p>
+                        </div>
+                        <div class="fade-in" style="transition-delay: 300ms;">
+                            <h4 class="text-xl font-bold text-primary">Método Exclusivo</h4>
+                            <p class="mt-2 text-gray-600">Metodologia baseada em ciência e dados, testada, comprovada, segura e eficaz com acompanhamento profissional extremamente qualificado.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-16 text-center fade-in">
+                    <a href="https://wa.me/5521992341433?text=Olá!%20Vim%20pelo%20site%20do%20Dr.%20Breno%20Ventura%20e%20gostaria%20de%20agendar%20uma%20consulta" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-semibold rounded-lg text-white bg-primary hover:bg-primary-hover shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                        Agendar uma consulta
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Testimonials Section -->
+        <section id="depoimentos" class="py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center fade-in">
+                    <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl tracking-tighter">Histórias de sucesso que inspiram</h2>
+                    <p class="mt-4 text-lg text-gray-600">Veja o que meus pacientes dizem sobre a transformação que alcançaram.</p>
+                </div>
+                <div class="mt-16 gap-8 testimonial-slider fade-in">
+                    <!-- Testimonial cards will be inserted here -->
+                </div>
+
+                <div class="mt-16 text-center fade-in">
+                    <a href="https://wa.me/5521992341433?text=Olá!%20Vim%20pelo%20site%20do%20Dr.%20Breno%20Ventura%20e%20gostaria%20de%20agendar%20uma%20consulta" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-semibold rounded-lg text-white bg-primary hover:bg-primary-hover shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                        Agendar uma consulta
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. FAQ Section -->
+        <section id="faq" class="py-24 bg-gray-50/70">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center fade-in">
+                    <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl tracking-tighter">Perguntas Frequentes</h2>
+                </div>
+                <div class="mt-12 space-y-4 fade-in">
+                    <!-- FAQ items will be inserted here -->
+                </div>
+
+                <div class="mt-16 text-center fade-in">
+                    <a href="https://wa.me/5521992341433?text=Olá!%20Vim%20pelo%20site%20do%20Dr.%20Breno%20Ventura%20e%20gostaria%20de%20agendar%20uma%20consulta" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-semibold rounded-lg text-white bg-primary hover:bg-primary-hover shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                        Agendar uma consulta
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Final CTA -->
+        <section id="cta" class="py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="relative bg-primary text-white p-8 md:p-16 rounded-2xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-8 items-center fade-in">
+                     <div class="absolute -bottom-1/2 -left-1/4 w-full h-full bg-white/10 rounded-full blur-3xl opacity-50"></div>
+                    <div class="relative z-10">
+                        <h2 class="text-3xl lg:text-4xl font-extrabold tracking-tighter">Pronto para transformar sua vida?</h2>
+                        <div class="mt-4 text-lg opacity-90 space-y-4">
+                            <p>Você merece mais do que só emagrecer.</p>
+                            <p>A consulta inicial é o primeiro passo para transformar seu corpo, recuperar sua vitalidade e aumentar sua performance — na academia, no trabalho e na vida sexual.</p>
+                            <p>Este é um plano focado em resultados estéticos e funcionais, com base médica, acompanhamento personalizado e estratégias que funcionam.</p>
+                            <p class="font-bold">A pergunta é: você vai continuar esperando, ou vai começar agora?</p>
+                        </div>
+                        <div class="mt-8">
+                            <a href="https://wa.me/5521992341433?text=Olá!%20Vim%20pelo%20site%20do%20Dr.%20Breno%20Ventura%20e%20gostaria%20de%20agendar%20uma%20consulta" target="_blank" rel="noopener noreferrer" class="inline-block bg-white text-primary font-bold py-3 px-8 rounded-lg shadow-md hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
+                                Quero agendar agora
+                            </a>
+                        </div>
+                    </div>
+                    <div class="hidden md:flex justify-center items-center z-10">
+                        <img src="https://i.imgur.com/OpNbrrZ.png" class="rounded-lg shadow-xl w-full max-w-md" alt="Mockup de agendamento do Dr. Breno Ventura">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 8. Footer -->
+    <footer class="bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p class="text-gray-400">&copy; 2025 Dr. Breno Ventura. Todos os direitos reservados.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="#" class="text-gray-400 hover:text-white transition-colors">LinkedIn</a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors">Instagram</a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors">Facebook</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // --- Mobile Menu Toggle ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.style.display = isExpanded ? 'none' : 'block';
+        });
+        
+        // Close mobile menu when a link is clicked
+        mobileMenu.addEventListener('click', (event) => {
+            if (event.target.tagName === 'A') {
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+                mobileMenu.style.display = 'none';
+            }
+        });
+
+        // --- Navbar shadow on scroll ---
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                navbar.classList.add('shadow-md');
+            } else {
+                navbar.classList.remove('shadow-md');
+            }
+        });
+
+        // --- Fade-in on Scroll Animation ---
+        const fadeInElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeInElements.forEach(el => observer.observe(el));
+        
+        // --- Dynamically inject testimonials ---
+        const testimonialsContainer = document.querySelector('.testimonial-slider');
+        const testimonials = [
+            { name: 'Álvaro Costa', location: 'Rio de Janeiro', text: 'Sem dúvida o melhor profissional da área que posso indicar quando o que se busca é saúde. Tudo isso sem deixar de lado o melhor resultado estético também. Recuperei minha autoconfiança e principalmente meu vigor para a rotina. Recomendo a todos.', avatar: 'AC' },
+            { name: 'Daniela Valle', location: 'Rio de Janeiro', text: 'A reposição hormonal mudou minha qualidade de vida. Mais energia e disposição no dia a dia. Recomendo muito!', avatar: 'DV' },
+            { name: 'Felipe Amorim', location: 'São Paulo', text: 'O Dr. Breno foi extremamente didático e transparente ao ajustar minha dieta à minha rotina. Ele foca no longo prazo, explicando cada detalhe do acompanhamento. Sigo como paciente e o recomendo como referência.', avatar: 'FA' }
+        ];
+        
+        testimonials.forEach(testimonial => {
+            const card = document.createElement('div');
+            card.className = 'bg-white p-6 rounded-2xl shadow-lg border border-gray-200/80 flex flex-col mx-2 md:mx-0';
+            card.innerHTML = `
+                <div class="flex items-center mb-2 text-yellow-400">
+                    ${'★'.repeat(5)}
+                </div>
+                <blockquote class="text-gray-600 flex-grow">"${testimonial.text}"</blockquote>
+                <div class="mt-6 flex items-center">
+                    <img class="h-12 w-12 rounded-full object-cover bg-blue-100 text-primary flex items-center justify-center font-bold" src="https://placehold.co/48x48/E0E7FF/1D4ED8?text=${testimonial.avatar}" alt="Avatar de ${testimonial.name}">
+                    <div class="ml-4">
+                        <p class="font-bold text-gray-900">${testimonial.name}</p>
+                        <p class="text-sm text-gray-500">${testimonial.location}</p>
+                    </div>
+                </div>
+            `;
+            testimonialsContainer.appendChild(card);
+        });
+        
+        // --- Dynamically inject FAQ items ---
+        const faqContainer = document.querySelector('#faq .space-y-4');
+        const faqs = [
+            { q: 'Como funciona a consulta inicial?', a: 'Fazemos uma análise completa do seu histórico, exames e rotina. A partir daí, traçamos um plano detalhado e personalizado para atingir seus objetivos.' },
+            { q: 'Quanto tempo demora para começar a ver resultados?', a: 'Geralmente, a partir das primeiras semanas, já é possível ver resultados expressivos em pacientes com boa adesão à metodologia e às medicações.' },
+            { q: 'Vocês atendem plano de saúde/convênios?', a: 'Atendemos convênios apenas pelo sistema de reembolso. O paciente paga o valor da consulta e leva um recibo para solicitar o reembolso junto à operadora do seu plano.' },
+            { q: 'Os medicamentos ou o tratamento são caros?', a: 'Depende. Nosso acompanhamento é individual e personalizado, adequado à realidade financeira e do dia a dia de cada paciente para garantir a continuidade do tratamento. Nosso compromisso é entregar um tratamento que seja sustentável para o paciente e assim atingir o seu objetivo de forma concreta e permanente.' }
+        ];
+
+        faqs.forEach((faq, index) => {
+            const detail = document.createElement('details');
+            detail.className = 'group bg-gray-50/80 p-6 rounded-lg border border-gray-200/80';
+            if (index === 0) detail.setAttribute('open', '');
+
+            detail.innerHTML = `
+                <summary class="flex items-center justify-between cursor-pointer list-none">
+                    <h5 class="text-lg font-medium text-gray-900">${faq.q}</h5>
+                    <span class="relative flex-shrink-0 ml-1.5 w-5 h-5">
+                       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 accordion-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                    </span>
+                </summary>
+                <p class="mt-4 leading-relaxed text-gray-700">${faq.a}</p>
+            `;
+            faqContainer.appendChild(detail);
+        });
+    });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
